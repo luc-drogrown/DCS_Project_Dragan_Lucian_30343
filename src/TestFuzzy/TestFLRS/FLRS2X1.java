@@ -21,11 +21,11 @@ import Enumerations.TransitionOperation;
 public class FLRS2X1 {
 	public static void main (String []args) {
 		
-		FLRS flrs2x1 = new FLRS(new FV(FZ.PL), new FV(FZ.PM), new FV(FZ.ZR), new FV(FZ.NL),new FV(FZ.ZR), 
-	   			new FV(FZ.PL), new FV(FZ.NM), new FV(FZ.PL), new FV(FZ.PL), new FV(FZ.NM), 
-	   			new FV(FZ.NL), new FV(FZ.PL), new FV(FZ.ZR), new FV(FZ.ZR), new FV(FZ.PL), 
-	   			new FV(FZ.ZR), new FV(FZ.ZR), new FV(FZ.NM), new FV(FZ.PM), new FV(FZ.NL),
-	   			new FV(FZ.ZR), new FV(FZ.PM), new FV(FZ.ZR), new FV(FZ.NM),	new FV(FZ.PL));
+		FLRS flrs2x1 = new FLRS(new FV(FZ.NL), new FV(FZ.NM), new FV(FZ.ZR), new FV(FZ.PM),new FV(FZ.PL),
+				new FV(FZ.NL), new FV(FZ.NM), new FV(FZ.ZR), new FV(FZ.PM),new FV(FZ.PL),
+				new FV(FZ.NL), new FV(FZ.NM), new FV(FZ.ZR), new FV(FZ.PM),new FV(FZ.PL),
+				new FV(FZ.NL), new FV(FZ.NM), new FV(FZ.ZR), new FV(FZ.PM),new FV(FZ.PL),
+				new FV(FZ.NL), new FV(FZ.NM), new FV(FZ.ZR), new FV(FZ.PM),new FV(FZ.PL));
 
 		flrs2x1.Print();
 		
