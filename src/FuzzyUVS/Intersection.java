@@ -202,7 +202,7 @@ public class Intersection {
         // Network Output Places (DataTransfer to Exit Lanes)
         DataTransfer p_out1 = new DataTransfer();
         p_out1.SetName("P_out1");
-        p_out1.Value = new TransferOperation("localhost", "1085", "P_e_i1");
+        p_out1.Value = new TransferOperation("localhost", "1081", "P_e_i1");
         pn.PlaceList.add(p_out1);
 
         PetriTransition t_out1 = new PetriTransition(pn);
@@ -220,7 +220,7 @@ public class Intersection {
 
         DataTransfer p_out2 = new DataTransfer();
         p_out2.SetName("P_out2");
-        p_out2.Value = new TransferOperation("localhost", "1086", "P_e_i2");
+        p_out2.Value = new TransferOperation("localhost", "1082", "P_e_i2");
         pn.PlaceList.add(p_out2);
 
         PetriTransition t_out2 = new PetriTransition(pn);
@@ -238,7 +238,7 @@ public class Intersection {
 
         DataTransfer p_out3 = new DataTransfer();
         p_out3.SetName("P_out3");
-        p_out3.Value = new TransferOperation("localhost", "1087", "P_e_i3");
+        p_out3.Value = new TransferOperation("localhost", "1083", "P_e_i3");
         pn.PlaceList.add(p_out3);
 
         PetriTransition t_out3 = new PetriTransition(pn);
@@ -255,8 +255,8 @@ public class Intersection {
         pn.Transitions.add(t_out3);
 
         DataTransfer p_out4 = new DataTransfer();
-        p_out1.SetName("P_out4");
-        p_out1.Value = new TransferOperation("localhost", "1088", "P_e_i4");
+        p_out4.SetName("P_out4");
+        p_out4.Value = new TransferOperation("localhost", "1084", "P_e_i4");
         pn.PlaceList.add(p_out4);
 
         PetriTransition t_out4 = new PetriTransition(pn);
@@ -271,5 +271,9 @@ public class Intersection {
         t_out4.GuardMappingList.add(grdTOut4);
         t_out4.Delay = 0;
         pn.Transitions.add(t_out4);
+
+        PetriNetWindow frame = new PetriNetWindow(false);
+        frame.petriNet = pn;
+        frame.setVisible(true);
     }
 }

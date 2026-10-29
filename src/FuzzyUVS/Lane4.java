@@ -17,15 +17,18 @@ public class Lane4 {
         //Main petri net declaration for Lane 1
         PetriNet pn = new PetriNet();
         pn.PetriNetName = "Main Petri Lane 4";
-        pn.SetInputFile("D:/petri.txt");
+        pn.NetworkPort = 1084;
 
-
+        // =================================================================
+        // PART 1: ENTRANCE LANE PLACES
+        // =================================================================
         //FLRS move operation
         FLRS flrs_move= new FLRS(new FV(FZ.NL), new FV(FZ.NM), new FV(FZ.ZR), new FV(FZ.PM),new FV(FZ.PL));
 
         //Input place to lane
         DataFuzzy p_i = new DataFuzzy();
         p_i.SetName("P_i");
+        //p_i.SetValue(new Fuzzy(0.2F));
         pn.PlaceList.add(p_i);
 
         //lane places
@@ -41,6 +44,7 @@ public class Lane4 {
         //Controller place
         DataFuzzy p_tl = new DataFuzzy();
         p_tl.SetName("P_TL");
+        p_tl.SetValue(new Fuzzy(0.0F));
         pn.PlaceList.add(p_tl);
 
         //Green place
@@ -54,6 +58,17 @@ public class Lane4 {
         p_o.SetName("Pout");
         p_o.Value = new TransferOperation("localhost","1080","P_i4");
         pn.PlaceList.add(p_o);
+
+        // =================================================================
+        // PART 2: EXIT LANE PLACES
+        // =================================================================
+        DataFuzzy p_e_i4 = new DataFuzzy();
+        p_e_i4.SetName("P_e_i4");
+        pn.PlaceList.add(p_e_i4);
+
+        DataFuzzy p_end4 = new DataFuzzy();
+        p_end4.SetName("P_End4");
+        pn.PlaceList.add(p_end4);
 
         //Transitions
         // T1 ------------------------------------------------
@@ -124,6 +139,25 @@ public class Lane4 {
         t_out.GuardMappingList.add(grdTOut);
         t_out.Delay = 0;
         pn.Transitions.add(t_out);
+
+        //exit lane transitions
+        PetriTransition t_e4 = new PetriTransition(pn);
+        t_e4.TransitionName = "t_e4";
+        t_e4.InputPlaceName.add("P_e_i4");
+
+        Condition Te4Ct1 = new Condition(t_e4, "P_e_i4", TransitionCondition.NotNull);
+        GuardMapping grdTe4 = new GuardMapping();
+        grdTe4.condition = Te4Ct1;
+
+        ArrayList<PlaceNameWithWeight> inputTe4 = new ArrayList<>();
+        inputTe4.add(new PlaceNameWithWeight("P_e_i4", 1F));
+        ArrayList<String> outputTe4 = new ArrayList<>();
+        outputTe4.add("P_End4");
+
+        grdTe4.Activations.add(new Activation(t_e4, flrs_move, inputTe4, TransitionOperation.FLRS, outputTe4));
+        t_e4.GuardMappingList.add(grdTe4);
+        t_e4.Delay = 0;
+        pn.Transitions.add(t_e4);
         // end of transition declaration
 
         System.out.println("Lane4 started \n ------------------------------");
