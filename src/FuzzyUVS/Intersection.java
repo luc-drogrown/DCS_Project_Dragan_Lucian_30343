@@ -72,11 +72,6 @@ public class Intersection {
         pn.PlaceList.add(p_o4);
 
         //Splitting places
-        DataFuzzy fp1 = new DataFuzzy();
-        fp1.SetName("Fp1");
-        fp1.SetValue(new Fuzzy(0.25F));
-        pn.ConstantPlaceList.add(fp1);
-
         DataFuzzy fp2 = new DataFuzzy();
         fp2.SetName("Fp2");
         fp2.SetValue(new Fuzzy(0.5F));
@@ -271,6 +266,9 @@ public class Intersection {
         t_out4.GuardMappingList.add(grdTOut4);
         t_out4.Delay = 0;
         pn.Transitions.add(t_out4);
+
+        System.out.println("Intersection started \n ------------------------------");
+        pn.Delay = 3000;
 
         PetriNetWindow frame = new PetriNetWindow(false);
         frame.petriNet = pn;

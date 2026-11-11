@@ -19,17 +19,27 @@ public class Lane2 {
         pn.PetriNetName = "Main Petri Lane 2";
         pn.NetworkPort = 1082;
 
-        //FLRS move operation
+        //FLRS operations
         FLRS flrs_move= new FLRS(new FV(FZ.NL), new FV(FZ.NM), new FV(FZ.ZR), new FV(FZ.PM),new FV(FZ.PL));
+        FLRS flrs_plus = new FLRS(  new FV(FZ.NL), new FV(FZ.NL), new FV(FZ.NL), new FV(FZ.NM),new FV(FZ.ZR),
+                                    new FV(FZ.NL), new FV(FZ.NL), new FV(FZ.NM), new FV(FZ.ZR),new FV(FZ.PM),
+                                    new FV(FZ.NL), new FV(FZ.NM), new FV(FZ.ZR), new FV(FZ.PM),new FV(FZ.PL),
+                                    new FV(FZ.NM), new FV(FZ.ZR), new FV(FZ.PM), new FV(FZ.PL),new FV(FZ.PL),
+                                    new FV(FZ.ZR), new FV(FZ.PM), new FV(FZ.PL), new FV(FZ.PL),new FV(FZ.PL));
 
         // =================================================================
         // PART 1: ENTRANCE LANE PLACES
         // =================================================================
-        //Input place to lane
-        DataFuzzy p_i = new DataFuzzy();
-        p_i.SetName("P_i");
+        //Input place from roundabout
+        DataFuzzy p_r = new DataFuzzy();
+        p_r.SetName("P_R");
         //p_i.SetValue(new Fuzzy(0.4F));
-        pn.PlaceList.add(p_i);
+        pn.PlaceList.add(p_r);
+
+        //Input place from AlleyST
+        DataFuzzy p_st = new DataFuzzy();
+        p_st.SetName("P_st");
+        pn.PlaceList.add(p_st);
 
         //lane places
         DataFuzzy p_l = new DataFuzzy();
@@ -66,28 +76,33 @@ public class Lane2 {
         p_e_i2.SetName("P_e_i2");
         pn.PlaceList.add(p_e_i2);
 
-        DataFuzzy p_end2 = new DataFuzzy();
+        DataTransfer p_end2 = new DataTransfer();
         p_end2.SetName("P_End2");
+        p_end2.Value = new TransferOperation("localhost", "1090", "P_i1"); // 1090 is the Roundabout port
         pn.PlaceList.add(p_end2);
 
         //Transitions
         // T1 ------------------------------------------------
         PetriTransition t1 = new PetriTransition(pn);
         t1.TransitionName = "T1";
-        t1.InputPlaceName.add("P_i");
+        t1.InputPlaceName.add("P_R");
+        t1.InputPlaceName.add("P_st");
 
-        Condition T1Ct1 = new Condition(t1, "P_i", TransitionCondition.NotNull);
+        Condition T1Ct1 = new Condition(t1, "P_R", TransitionCondition.NotNull);
+        Condition T1Ct2 = new Condition(t1, "P_st", TransitionCondition.NotNull);
+        T1Ct1.SetNextCondition(LogicConnector.AND, T1Ct2);
 
         GuardMapping grdT1 = new GuardMapping();
         grdT1.condition = T1Ct1;
 
         ArrayList<PlaceNameWithWeight> inputT1 = new ArrayList<>();
-        inputT1.add(new PlaceNameWithWeight("P_i", 1F));
+        inputT1.add(new PlaceNameWithWeight("P_R", 1F));
+        inputT1.add(new PlaceNameWithWeight("P_st", 1F));
 
         ArrayList<String> OutputT1 = new ArrayList<>();
         OutputT1.add("P_l");
 
-        grdT1.Activations.add(new Activation(t1, flrs_move, inputT1, TransitionOperation.FLRS, OutputT1));
+        grdT1.Activations.add(new Activation(t1, flrs_plus, inputT1, TransitionOperation.FLRS, OutputT1));
         t1.GuardMappingList.add(grdT1);
 
         t1.Delay = 0;
@@ -149,12 +164,7 @@ public class Lane2 {
         GuardMapping grdTe2 = new GuardMapping();
         grdTe2.condition = Te2Ct1;
 
-        ArrayList<PlaceNameWithWeight> inputTe2 = new ArrayList<>();
-        inputTe2.add(new PlaceNameWithWeight("P_e_i2", 1F));
-        ArrayList<String> outputTe2 = new ArrayList<>();
-        outputTe2.add("P_End2");
-
-        grdTe2.Activations.add(new Activation(t_e2, flrs_move, inputTe2, TransitionOperation.FLRS, outputTe2));
+        grdTe2.Activations.add(new Activation(t_e2, "P_e_i2", TransitionOperation.SendOverNetwork, "P_End2"));
         t_e2.GuardMappingList.add(grdTe2);
         t_e2.Delay = 0;
         pn.Transitions.add(t_e2);
