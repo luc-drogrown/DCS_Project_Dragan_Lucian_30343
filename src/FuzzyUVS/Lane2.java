@@ -53,7 +53,7 @@ public class Lane2 {
         //Controller place
         DataFuzzy p_tl = new DataFuzzy();
         p_tl.SetName("P_TL");
-        p_tl.SetValue(new Fuzzy(0.0F));
+        //p_tl.SetValue(new Fuzzy(0.0F));
         pn.PlaceList.add(p_tl);
 
         //Green place
