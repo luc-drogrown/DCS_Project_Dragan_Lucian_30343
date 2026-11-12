@@ -22,7 +22,7 @@ public class Roundabout {
 
         PetriNet pn = new PetriNet();
         pn.PetriNetName = "Roundabout";
-        pn.NetworkPort = 1090;
+        pn.NetworkPort = 1086;
 
         //input place declaration
         DataFuzzy p_i1 = new DataFuzzy();

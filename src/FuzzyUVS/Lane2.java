@@ -33,7 +33,6 @@ public class Lane2 {
         //Input place from roundabout
         DataFuzzy p_r = new DataFuzzy();
         p_r.SetName("P_R");
-        //p_i.SetValue(new Fuzzy(0.4F));
         pn.PlaceList.add(p_r);
 
         //Input place from AlleyST
@@ -78,7 +77,7 @@ public class Lane2 {
 
         DataTransfer p_end2 = new DataTransfer();
         p_end2.SetName("P_End2");
-        p_end2.Value = new TransferOperation("localhost", "1090", "P_i1"); // 1090 is the Roundabout port
+        p_end2.Value = new TransferOperation("localhost", "1085", "P_i1");
         pn.PlaceList.add(p_end2);
 
         //Transitions

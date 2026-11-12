@@ -1,0 +1,8 @@
+Lanes and ports:
+    Intersection: 1080
+    Lane1: 1081
+    Lane2: 1082
+    Lane3: 1083
+    Lane4: 1084
+    AlleySt: 1085
+    Roundabout: 1086

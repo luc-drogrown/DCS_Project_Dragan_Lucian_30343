@@ -14,11 +14,11 @@ public class AlleyST {
     public static void main(String[] args) {
         PetriNet pn = new PetriNet();
         pn.PetriNetName = "Alley street Petri Net";
+        pn.NetworkPort = 1085;
 
         /* Places */
         DataFuzzy p_i = new DataFuzzy();
         p_i.SetName("P_i");
-        //p_i.SetValue(new Fuzzy(0.2F));
         pn.PlaceList.add(p_i);
 
         DataTransfer p_out = new DataTransfer();
@@ -37,7 +37,7 @@ public class AlleyST {
         GuardMapping grdTsend = new GuardMapping();
         grdTsend.condition = TsendCt1;
 
-        grdTsend.Activations.add(new Activation(tsend, "P_i", TransitionOperation.SendOverNetwork, "P_st"));
+        grdTsend.Activations.add(new Activation(tsend, "P_i", TransitionOperation.SendOverNetwork, "P_out"));
 
         tsend.GuardMappingList.add(grdTsend);
         tsend.Delay=0;

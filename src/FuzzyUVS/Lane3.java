@@ -28,7 +28,6 @@ public class Lane3 {
         //Input place to lane
         DataFuzzy p_i = new DataFuzzy();
         p_i.SetName("P_i");
-        //p_i.SetValue(new Fuzzy(0.3F));
         pn.PlaceList.add(p_i);
 
         //lane places
